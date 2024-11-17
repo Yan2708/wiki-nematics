@@ -60,19 +60,20 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
 
-  cassandra:
-    image: cassandra:latest
-    container_name: cassandra-container
-    ports:
-      - "9042:9042"
+  mongodb:
+    image: mongo:latest 
+    container_name: mongodb
     environment:
-      - CASSANDRA_USER=admin
-      - CASSANDRA_PASSWORD=admin
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    ports:
+      - "27017:27017"
     volumes:
-      - cassandra-data:/var/lib/cassandra
-
-
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    restart: unless-stopped
 
 volumes:
   grafana-storage: {}
-  cassandra-data:
+  mongo-data:

@@ -26,5 +26,13 @@ cd .\processor\target
 docker exec flink-jobmanager mkdir -p /opt/flink/usrlib/
 docker cp .\processor-1.0-SNAPSHOT.jar flink-jobmanager:/opt/flink/usrlib/
 
+cd ..\..
+docker cp ./.env flink-jobmanager:/opt/flink/usrlib/
+
 echo Running job
 docker exec flink-jobmanager /opt/flink/bin/flink run -d /opt/flink/usrlib/processor-1.0-SNAPSHOT.jar
+
+pause
+
+::closing
+taskkill /F /IM client.exe
