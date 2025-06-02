@@ -37,7 +37,7 @@ services:
       "
 
   jobmanager:
-    image: apache/flink:latest
+    image: apache/flink:1.20
     container_name: job-manager
     ports:
       - "8081:8081"
@@ -47,7 +47,8 @@ services:
 
 
   taskmanager:
-    image: apache/flink:latest
+    image: apache/flink:1.20
+    
     container_name: task-manager
     depends_on:
       - jobmanager
